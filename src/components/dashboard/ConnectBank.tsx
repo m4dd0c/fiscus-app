@@ -20,7 +20,7 @@ const ConnectBank = () => {
         });
         setLinkToken(response.data.link_token);
       } catch (error) {
-        console.error("Error generating link token:", error);
+        console.log("Error generating link token:", error);
       }
     };
     if (isLoaded && isSignedIn) createLinkToken();
@@ -35,7 +35,7 @@ const ConnectBank = () => {
         public_token,
       });
     } catch (error) {
-      console.error("Error exchanging public token:", error);
+      console.log("Error exchanging public token:", error);
     } finally {
       setLoading(false);
     }

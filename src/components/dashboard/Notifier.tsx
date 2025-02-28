@@ -36,7 +36,7 @@ const Notifier = () => {
       // setResponse(res.data.message || "SMS sent successfully!");
       //TODO: add toaster
     } catch (error: any) {
-      console.error(error?.response?.data?.error);
+      console.log(error?.response?.data?.error);
       // setResponse(error.response?.data?.error || "Failed to send SMS.");
       //TODO: add toaster
     } finally {

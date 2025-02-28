@@ -41,7 +41,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ response: generatedText });
   } catch (error: any) {
-    console.error("Chatbot Error:", error?.response?.data || error?.message);
+    console.log("Chatbot Error:", error?.response?.data || error?.message);
     return NextResponse.json(
       {
         error: "Failed to get response from chatbot.",

@@ -33,7 +33,7 @@ export const POST = async (req: NextRequest) => {
       { status: 200 },
     );
   } catch (error: any) {
-    console.error(error, error?.message, error?.response?.data);
+    console.log(error, error?.message, error?.response?.data);
     return NextResponse.json(
       { error: "Error sending message." },
       { status: 400 },

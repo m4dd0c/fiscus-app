@@ -29,7 +29,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await axios.get("/api/plaid/transactions");
       setTransactions(response.data.transactions);
     } catch (error) {
-      console.error("Error fetching transactions:", error);
+      console.log("Error fetching transactions:", error);
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await axios.get("/api/plaid/accounts");
       setAccounts(response.data.accounts);
     } catch (err) {
-      console.error("Error fetching accounts:", err);
+      console.log("Error fetching accounts:", err);
     } finally {
       setLoading(false);
     }
