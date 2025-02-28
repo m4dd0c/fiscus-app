@@ -1,0 +1,37 @@
+/* scrollbar.css */
+
+/* Customize scrollbar for webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  /* Track (the area behind the scrollbar) */
+  ::-webkit-scrollbar-track {
+    background: darkgrey; /* Light grey background */
+    border-radius: 10px;
+  }
+  
+  /* Handle (the draggable part of the scrollbar) */
+  ::-webkit-scrollbar-thumb {
+    background: #888; /* Dark grey */
+    border-radius: 10px;
+    transition: background 0.3s;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker grey */
+  }
+  
+  /* Horizontal scrollbar */
+  ::-webkit-scrollbar:horizontal {
+    height: 6px;
+  }
+  
+  /* Styling for Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #161616;
+  }
+  
