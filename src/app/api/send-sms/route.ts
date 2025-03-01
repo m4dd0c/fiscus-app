@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest) => {
         { status: 400 },
       );
     }
-    const body = `${user?.username} your expenses gone beyond your budget, The Budget was ${budget} and your expenses exceeded that amount, which is ${exceed}.`;
+    const body = `Hey ${user?.username}, This is a friendly alert from FISCUS, Your Budget is ${budget} and your exceeded expenses amount is ${exceed}.`;
 
     const to = user?.primaryPhoneNumber?.phoneNumber || "+916378259689";
     await client.messages.create({
