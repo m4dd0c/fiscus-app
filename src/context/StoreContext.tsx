@@ -3,6 +3,7 @@ import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import React, { useState, useCallback } from "react";
 import { createContext } from "react";
+import { toast } from "sonner";
 
 interface iStoreContext {
   user: any;
@@ -29,7 +30,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await axios.get("/api/plaid/transactions");
       setTransactions(response.data.transactions);
     } catch (error) {
-      console.log("Error fetching transactions:", error);
+      toast("Error Fetching transactions");
     } finally {
       setLoading(false);
     }
@@ -41,7 +42,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await axios.get("/api/plaid/accounts");
       setAccounts(response.data.accounts);
     } catch (err) {
-      console.log("Error fetching accounts:", err);
+      toast("Error Fetching Accounts.");
     } finally {
       setLoading(false);
     }

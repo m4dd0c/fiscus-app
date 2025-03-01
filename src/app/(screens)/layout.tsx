@@ -6,6 +6,7 @@ import "../globals.css";
 import "../custom.css";
 import Providers from "@/context/Providers";
 import ConnectBank from "@/components/dashboard/ConnectBank";
+import { Toaster } from "@/components/ui/sonner";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Providers>
           <>
             <header className="bg-black z-50 flex justify-between items-center fixed top-0 inset-x-0 p-4 gap-4 h-16">
+              <Toaster theme="dark" duration={3000} />
               <Link className="space-x-4 flex items-center" href="/">
                 <span className="font-bold text-orange-500 text-5xl">₹</span>
                 <span className="font-semibold text-2xl">Fiscus</span>

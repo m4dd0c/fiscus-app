@@ -9,6 +9,7 @@ import { Loader2, Send } from "lucide-react";
 import { useStore } from "@/hook/useStore";
 import Loader from "@/components/shared/Loader";
 import axios from "axios";
+import { toast } from "sonner";
 
 const Page = () => {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
@@ -37,7 +38,7 @@ const Page = () => {
 
       setMessages((prev) => [...prev, { role: "bot", content: data.response }]);
     } catch (error) {
-      console.log(error);
+      toast("Couldn't generate response.");
       setMessages((prev) => [
         ...prev,
         { role: "bot", content: "Error occurred." },

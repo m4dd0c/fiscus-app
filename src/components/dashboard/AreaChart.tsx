@@ -5,6 +5,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { format } from "date-fns";
 import {
   Card,
   CardContent,
@@ -68,7 +69,7 @@ const TransactionChart = ({ transactions }: { transactions: any[] }) => {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => format(new Date(value), "MMM, dd")}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line

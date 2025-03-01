@@ -26,12 +26,11 @@ import { transferSchema } from "@/lib/Schema/schema";
 import { useStore } from "@/hook/useStore";
 import Loader from "@/components/shared/Loader";
 import LilHeading from "@/components/shared/LilHeading";
+import { toast } from "sonner";
 
 function Page() {
   const { fetchAccounts, accounts, loading: accountLoading } = useStore();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof transferSchema>>({
     resolver: zodResolver(transferSchema),
@@ -44,15 +43,14 @@ function Page() {
 
   const onSubmit = async (data: z.infer<typeof transferSchema>) => {
     setLoading(true);
-    setError(null);
-    setSuccess(null);
+    if (data.amount < 1) return toast("Amount can't go below $1");
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      setSuccess("Transfer successful!");
+      toast("Fund Transfer successful!");
       form.reset();
     } catch (err: any) {
-      setError(err.message);
+      toast("Couldn't Transfer funds.");
     } finally {
       setLoading(false);
     }
@@ -149,8 +147,6 @@ function Page() {
             <Button type="submit" disabled={loading}>
               {loading ? "Processing..." : "Initiate Transfer"}
             </Button>
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500">{success}</p>}
           </form>
         </Form>
       </div>

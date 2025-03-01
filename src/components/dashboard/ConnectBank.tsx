@@ -5,10 +5,13 @@ import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import Loader from "@/components/shared/Loader";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
+import { useStore } from "@/hook/useStore";
 
 const ConnectBank = () => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
   const { user, isSignedIn, isLoaded } = useUser();
+  const { fetchAccounts } = useStore();
 
   // generating temp link token
   useEffect(() => {
@@ -20,7 +23,7 @@ const ConnectBank = () => {
         });
         setLinkToken(response.data.link_token);
       } catch (error) {
-        console.log("Error generating link token:", error);
+        toast("Error generating link token");
       }
     };
     if (isLoaded && isSignedIn) createLinkToken();
@@ -34,8 +37,9 @@ const ConnectBank = () => {
       await axios.post("/api/plaid/exchange-token", {
         public_token,
       });
+      await fetchAccounts();
     } catch (error) {
-      console.log("Error exchanging public token:", error);
+      toast("Error exchanging public token.");
     } finally {
       setLoading(false);
     }

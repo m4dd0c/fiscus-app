@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Label } from "../ui/label";
+import { toast } from "sonner";
 
 const Notifier = () => {
   const [budget, setBudget] = useState(0);
@@ -20,25 +21,21 @@ const Notifier = () => {
 
   const sendSMS = async () => {
     if (!budget || !exceed) {
-      // TODO: add toaster
+      toast("Please provide a Budget and Exceed amount.");
       return;
     }
 
     setLoading(true);
 
     try {
-      const { data } = await axios.post("/api/send-sms", {
+      await axios.post("/api/send-sms", {
         budget,
         exceed,
       });
-      console.info(data.message);
 
-      // setResponse(res.data.message || "SMS sent successfully!");
-      //TODO: add toaster
+      toast("SMS send successfully.");
     } catch (error: any) {
-      console.log(error?.response?.data?.error);
-      // setResponse(error.response?.data?.error || "Failed to send SMS.");
-      //TODO: add toaster
+      toast("Failed to send SMS");
     } finally {
       setLoading(false);
     }
