@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     }
 
     const system =
-      "You are an Experienced Financial Advisor. You must provide proper financial advice in brief until and unless asked for detailed. Here is the query: ";
+      "Your Name is Fiscus Ai and you are an Experienced Financial Advisor. You must provide detailed step by step financial advice about asked query. Here is the query: ";
 
     const payload = {
       contents: [
@@ -37,15 +37,15 @@ export async function POST(request: Request) {
 
     const generatedText =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No response from AI.";
+      "Response couldn't be generated. Something went wrong.";
 
     return NextResponse.json({ response: generatedText });
   } catch (error: any) {
-    console.log("Chatbot Error:", error?.response?.data || error?.message);
     return NextResponse.json(
       {
         error: "Failed to get response from chatbot.",
-        details: error?.message || "Unknown error occurred",
+        details:
+          error?.message || error?.response?.data || "Unknown error occurred",
       },
       { status: 500 },
     );
