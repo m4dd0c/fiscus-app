@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
-import axios from "axios";
 
 import {
   Select,
@@ -49,10 +48,7 @@ function Page() {
     setSuccess(null);
 
     try {
-      const { data: res } = await axios.post("/api/transfer", data);
-
-      console.log(res);
-
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       setSuccess("Transfer successful!");
       form.reset();
     } catch (err: any) {
