@@ -18,9 +18,9 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  // useEffect(() => {
-  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [messages]);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -31,7 +31,9 @@ const Page = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post("/api/chat", { message: input });
+      const { data } = await axios.post("/api/chat", {
+        message: input,
+      });
 
       setMessages((prev) => [...prev, { role: "bot", content: data.response }]);
     } catch (error) {
