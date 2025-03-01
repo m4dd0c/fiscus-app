@@ -15,13 +15,13 @@ const AccountCard = ({ account }: any) => {
 
       <div className="inline-block w-12 h-8 bg-gradient-to-tl from-yellow-200 to-yellow-100 rounded-md shadow-inner overflow-hidden">
         <div className="relative w-full h-full grid grid-cols-2 gap-1">
-          <div className="absolute border border-gray-900 rounded w-4 h-6 left-4 top-1"></div>
-          <div className="border-b border-r border-gray-900 rounded-br"></div>
-          <div className="border-b border-l border-gray-900 rounded-bl"></div>
-          <div className=""></div>
-          <div className=""></div>
-          <div className="border-t border-r border-gray-900 rounded-tr"></div>
-          <div className="border-t border-l border-gray-900 rounded-tl"></div>
+          <div className="absolute border border-gray-900 rounded w-4 h-6 left-4 top-1" />
+          <div className="border-b border-r border-gray-900 rounded-br" />
+          <div className="border-b border-l border-gray-900 rounded-bl" />
+          <div className="" />
+          <div className="" />
+          <div className="border-t border-r border-gray-900 rounded-tr" />
+          <div className="border-t border-l border-gray-900 rounded-tl" />
         </div>
       </div>
 
