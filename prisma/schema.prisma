@@ -8,10 +8,11 @@ datasource db {
 }
 
 model User {
-  username @unique String
-  id       @id @default(autoIncreament)
-  email    String @unique
-  password? String
-  access_token? String
-  fundingUrl? String
+  id               Int @id @default(autoincrement())
+  clerkId          String @unique
+  username         String @unique
+  email            String @unique
+  password         String?
+  accessToken      String?
+  fundingSourceUrl String?
 }
