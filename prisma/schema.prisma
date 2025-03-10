@@ -15,4 +15,13 @@ model User {
   password         String?
   accessToken      String?
   fundingSourceUrl String?
+  receipt          Receipt[]
+}
+
+model Receipt {
+  id       Int @id @default(autoincrement())
+  amount   Int
+  source   String
+  userId   Int
+  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
