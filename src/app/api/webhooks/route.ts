@@ -24,9 +24,12 @@ export async function POST(req: Request) {
 
   // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response("Error: Missing Svix headers", {
-      status: 400,
-    });
+    return NextResponse.json(
+      { error: "Missing Svix headers" },
+      {
+        status: 400,
+      },
+    );
   }
 
   // Get body
@@ -44,9 +47,12 @@ export async function POST(req: Request) {
     }) as WebhookEvent;
   } catch (err) {
     console.error("Error: Could not verify webhook:", err);
-    return new Response("Error: Verification error", {
-      status: 400,
-    });
+    return NextResponse.json(
+      { error: "Message verification error." },
+      {
+        status: 400,
+      },
+    );
   }
 
   // Do something with payload
