@@ -1,6 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { prismaClient } from "@/lib/service/Prisma";
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
@@ -56,13 +57,34 @@ export async function POST(req: Request) {
 
   if (evt.type === "user.created") {
     console.log("created userId:", evt.data.id);
+    if (!id) return;
+    const user = await prismaClient.user.create({
+      data: {
+        clerkId: id,
+        username: "some usrname",
+        email: "some email",
+        password: "some psk if avail",
+      },
+    });
+    console.log(user, "is created user");
   }
 
   if (evt.type === "user.updated") {
     console.log("updated userId:", evt.data.id);
+    // const user = await prismaClient.user.update({
+    //   where: {clerkId},
+    //   data: {},
+    // });
+    console.log("is updated user");
   }
   if (evt.type === "user.deleted") {
     console.log("deleted userId:", evt.data.id);
+    // const user = await prismaClient.user.delete({
+    //   where: {
+    //     clerkId,
+    //   },
+    // });
+    console.log("is deleted user");
   }
   return new Response("Webhook received", { status: 200 });
 }
