@@ -101,5 +101,5 @@ export async function POST(req: Request) {
     });
     console.log(user, "is deleted user");
   }
-  return new Response("Webhook received", { status: 200 });
+  return NextResponse.json({ message: "Webhook received" }, { status: 200 });
 }
