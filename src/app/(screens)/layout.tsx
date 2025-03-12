@@ -29,8 +29,8 @@ export default function RootLayout({
       <body className={`dark font-quicksand ${quicksand.variable} antialiased`}>
         <Providers>
           <>
-            <header className="bg-black z-50 flex justify-between items-center fixed top-0 inset-x-0 p-4 gap-4 h-16">
-              <Toaster theme="dark" duration={3000} />
+            <Toaster theme="dark" duration={3000} />
+            <header className="bg-neutral-900 z-50 flex justify-between items-center fixed top-0 inset-x-0 p-4 gap-4 h-16">
               <Link className="space-x-4 flex items-center" href="/">
                 <span className="font-bold text-orange-500 text-5xl">₹</span>
                 <span className="font-semibold text-2xl">Fiscus</span>
