@@ -12,16 +12,17 @@ model User {
   clerkId          String @unique
   username         String @unique
   email            String @unique
-  password         String?
-  accessToken      String?
-  fundingSourceUrl String?
+  accessToken      String? @default("")
+  fundingSourceUrl String? @default("")
   receipt          Receipt[]
 }
 
 model Receipt {
   id       Int @id @default(autoincrement())
-  amount   Int
+  amount Decimal @db.Decimal(10,2)  // Stores money with 2 decimal places
   source   String
   userId   Int
   user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

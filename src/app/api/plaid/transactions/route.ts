@@ -1,19 +1,24 @@
 import { NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { client } from "@/lib/service/Plaid";
+import { prismaClient } from "@/lib/service/Prisma";
 
 const START_DATE = "2024-01-01";
 const END_DATE = new Date().toISOString().split("T")[0];
 
 export async function GET() {
   try {
+    const { userId } = await auth();
+    if (!userId)
+      return NextResponse.json({ error: "user not found" }, { status: 401 });
     // get current user details
-    const user = await currentUser();
+    const user = await prismaClient.user.findUnique({
+      where: { clerkId: userId },
+    });
     if (!user)
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponse.json({ error: "User not found" }, { status: 401 });
 
-    const access_token = user.publicMetadata.access_token as string;
-    if (!access_token) {
+    if (!user.accessToken) {
       return NextResponse.json(
         { error: "No access token found" },
         { status: 400 },
@@ -22,7 +27,7 @@ export async function GET() {
 
     // fetch transactions from plaid
     const response = await client.transactionsGet({
-      access_token,
+      access_token: user.accessToken,
       start_date: START_DATE,
       end_date: END_DATE,
     });
