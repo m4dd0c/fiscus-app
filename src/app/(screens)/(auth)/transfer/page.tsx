@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,8 +30,7 @@ import { toast } from "sonner";
 
 function Page() {
   const { fetchAccounts, accounts, loading: accountLoading } = useStore();
-  const [loading, setLoading] = useState(false);
-
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof transferSchema>>({
     resolver: zodResolver(transferSchema),
     defaultValues: {
@@ -42,18 +41,16 @@ function Page() {
   });
 
   const onSubmit = async (data: z.infer<typeof transferSchema>) => {
-    setLoading(true);
     if (data.amount < 1) return toast("Amount can't go below $1");
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast("Fund Transfer successful!");
-      form.reset();
-    } catch (err: any) {
-      toast("Couldn't Transfer funds.");
-    } finally {
-      setLoading(false);
-    }
+    startTransition(async () => {
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        toast("Fund Transfer successful!");
+        form.reset();
+      } catch (err: any) {
+        toast("Couldn't Transfer funds.");
+      }
+    });
   };
 
   useEffect(() => {
@@ -144,8 +141,8 @@ function Page() {
               )}
             />
 
-            <Button type="submit" disabled={loading}>
-              {loading ? "Processing..." : "Initiate Transfer"}
+            <Button type="submit" disabled={isPending}>
+              {isPending ? "Processing..." : "Initiate Transfer"}
             </Button>
           </form>
         </Form>

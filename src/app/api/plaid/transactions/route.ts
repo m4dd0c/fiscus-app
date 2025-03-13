@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { client } from "@/lib/service/Plaid";
+import { plaidClient } from "@/lib/service/Plaid";
 import { prismaClient } from "@/lib/service/Prisma";
 
 const START_DATE = "2024-01-01";
@@ -26,7 +26,7 @@ export async function GET() {
     }
 
     // fetch transactions from plaid
-    const response = await client.transactionsGet({
+    const response = await plaidClient.transactionsGet({
       access_token: user.accessToken,
       start_date: START_DATE,
       end_date: END_DATE,

@@ -33,6 +33,6 @@ class PlaidService {
 }
 
 const plaidService = PlaidService.getInstance(config);
-const client = plaidService.getClient();
+const plaidClient = plaidService.getClient();
 
-export { client, plaidService };
+export { plaidClient, plaidService };

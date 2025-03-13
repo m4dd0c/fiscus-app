@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { client } from "@/lib/service/Plaid";
+import { plaidClient } from "@/lib/service/Plaid";
 import { currentUser } from "@clerk/nextjs/server";
 
 export async function GET() {
@@ -16,7 +16,7 @@ export async function GET() {
       );
     }
     // getting detailed accounts
-    const response = await client.authGet({ access_token });
+    const response = await plaidClient.authGet({ access_token });
     const { accounts, numbers, request_id } = response.data;
 
     return NextResponse.json({ accounts, numbers, request_id });

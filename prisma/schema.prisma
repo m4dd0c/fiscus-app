@@ -14,12 +14,13 @@ model User {
   email            String @unique
   accessToken      String? @default("")
   fundingSourceUrl String? @default("")
+  dwollaCustomerId String? @default("")
   receipt          Receipt[]
 }
 
 model Receipt {
   id       Int @id @default(autoincrement())
-  amount Decimal @db.Decimal(10,2)  // Stores money with 2 decimal places
+  amount   Decimal @db.Decimal(10,2)  // Stores money with 2 decimal places
   source   String
   userId   Int
   user     User @relation(fields: [userId], references: [id], onDelete: Cascade)

@@ -1,10 +1,6 @@
+import { twilioClient } from "@/lib/service/Twilio";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
-import twilio from "twilio";
-
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = twilio(accountSid, authToken);
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -23,7 +19,7 @@ export const POST = async (req: NextRequest) => {
     const body = `Hey ${user?.username}, This is a friendly alert from FISCUS, Your Budget is ${budget} and your exceeded expenses amount is ${exceed}.`;
 
     const to = user?.primaryPhoneNumber?.phoneNumber || "+916378259689";
-    await client.messages.create({
+    await twilioClient.messages.create({
       from: "+12626003584",
       to,
       body,
