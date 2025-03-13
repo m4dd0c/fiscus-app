@@ -4,6 +4,8 @@ import axios from "axios";
 import React, { useState, useCallback } from "react";
 import { createContext } from "react";
 import { toast } from "sonner";
+import { transferSchema } from "@/lib/Schema/schema";
+import { z } from "zod";
 
 interface iStoreContext {
   user: any;
@@ -12,6 +14,7 @@ interface iStoreContext {
   loading: boolean;
   transactions: any[];
   fetchTransactions: () => Promise<void>;
+  transferFunds: (data: z.infer<typeof transferSchema>) => Promise<void>;
 }
 
 const StoreContext = createContext<iStoreContext | null>(null);
@@ -36,6 +39,18 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  const transferFunds = useCallback(
+    async (data: z.infer<typeof transferSchema>) => {
+      try {
+        console.log(data);
+        await axios.post("/api/transfer", data);
+      } catch (error) {
+        toast("Error Fetching transactions");
+      }
+    },
+    [],
+  );
+
   const fetchAccounts = useCallback(async () => {
     setLoading(true);
     try {
@@ -56,6 +71,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         accounts,
         fetchAccounts,
         transactions,
+        transferFunds,
         fetchTransactions,
       }}
     >

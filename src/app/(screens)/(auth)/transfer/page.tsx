@@ -3,7 +3,6 @@ import { useEffect, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
 
 import {
   Select,
@@ -29,14 +28,19 @@ import LilHeading from "@/components/shared/LilHeading";
 import { toast } from "sonner";
 
 function Page() {
-  const { fetchAccounts, accounts, loading: accountLoading } = useStore();
+  const {
+    fetchAccounts,
+    accounts,
+    transferFunds,
+    loading: accountLoading,
+  } = useStore();
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof transferSchema>>({
     resolver: zodResolver(transferSchema),
     defaultValues: {
-      from: "",
-      to: "",
-      amount: 0,
+      sourceAccountId: "",
+      destinationAccountId: "",
+      amount: 1,
     },
   });
 
@@ -44,7 +48,7 @@ function Page() {
     if (data.amount < 1) return toast("Amount can't go below $1");
     startTransition(async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await transferFunds(data);
         toast("Fund Transfer successful!");
         form.reset();
       } catch (err: any) {
@@ -74,7 +78,7 @@ function Page() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="from"
+              name="sourceAccountId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>From</FormLabel>
@@ -105,7 +109,7 @@ function Page() {
 
             <FormField
               control={form.control}
-              name="to"
+              name="destinationAccountId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>To Account ID</FormLabel>

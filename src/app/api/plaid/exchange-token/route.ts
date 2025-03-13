@@ -30,13 +30,24 @@ export async function POST(req: Request) {
         { status: 200 },
       );
     }
-    console.log("user doesnot have anything already 3");
+    console.log("user does not have anything already 3");
 
     // 1A: Creating dwolla customer
     const dwollaCustomer = await dwollaClient.post("customers", {
-      firstName: clerkUser?.firstName || clerkUser?.username,
-      lastName: clerkUser?.lastName || "",
+      // firstName: "verified",
+      // lastName: clerkUser?.lastName || "",
+      // email: clerkUser?.emailAddresses[0].emailAddress,
+      firstName: "verified", // This triggers instant verification in Sandbox.
+      lastName: "User",
       email: clerkUser?.emailAddresses[0].emailAddress,
+      ipAddress: "127.0.0.1",
+      type: "personal",
+      address1: "123 Main St",
+      city: "Anytown",
+      state: "NY",
+      postalCode: "10001",
+      dateOfBirth: "1980-01-01",
+      ssn: "1234", // Last four digits for personal customers.
     });
     const location = dwollaCustomer.headers.get("location");
     const dwollaCustomerId = location ? uuidFromUrl(location) : undefined;
@@ -89,6 +100,7 @@ export async function POST(req: Request) {
     // publicMetadata can only store upto 8kb
     await clerk.users.updateUserMetadata(clerkUser.id, {
       publicMetadata: {
+        accountId: accountData.account_id,
         access_token,
         fundingSourceUrl,
         dwollaCustomerId,
@@ -101,6 +113,7 @@ export async function POST(req: Request) {
         clerkId: clerkUser.id,
       },
       data: {
+        accountId: accountData.account_id,
         accessToken: access_token,
         fundingSourceUrl,
         dwollaCustomerId,
