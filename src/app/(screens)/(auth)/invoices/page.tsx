@@ -5,15 +5,6 @@ import React, { useEffect } from "react";
 
 const Page = () => {
   const { fetchInvoices, invoices } = useStore();
-  const data = {
-    sourceUsername: "m4dd0c",
-    destinationUsername: "og_nitesh",
-    amount: 100,
-    transferId: `https://sandbox-api.opennode.co/v1/withdrawal/${crypto.randomUUID()}`,
-    sourceAccountId: crypto.randomUUID(),
-    destinationAccountId: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
-  };
 
   useEffect(() => {
     (async () => {
@@ -22,7 +13,20 @@ const Page = () => {
   }, [fetchInvoices]);
   return (
     <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3 p-10 container mx-auto overflow-y-auto h-screen pb-24">
-      <InvoiceCard {...data} />
+      {invoices &&
+        invoices?.length > 0 &&
+        invoices.map((invoice) => (
+          <InvoiceCard
+            destinationAccountId={invoice.destinationAccountId}
+            sourceAccountId={invoice.sourceAccountId}
+            sourceUsername={invoice.sourceUser.username}
+            destinationUsername={invoice.destinationUser.username}
+            transferId={invoice.transferId}
+            amount={invoice.amount}
+            createdAt={invoice.createdAt.toLocaleString()}
+            key={invoice.id}
+          />
+        ))}
     </div>
   );
 };

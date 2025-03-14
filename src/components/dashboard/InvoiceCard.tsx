@@ -1,4 +1,4 @@
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowDownLong, FaArrowRightLong } from "react-icons/fa6";
 
 export interface iInvoice {
   sourceUsername: string;
@@ -20,11 +20,12 @@ export const InvoiceCard = ({
   createdAt,
 }: iInvoice) => {
   return (
-    <div className="border rounded-lg p-4">
-      <div className="flex flex-wrap justify-between items-center">
-        <div className="flex font-bold max-sm:text-lg text-xl items-center justify-start gap-4 my-1">
+    <div className="border rounded-lg p-4 h-fit">
+      <div className="flex max-sm:flex-col-reverse justify-between items-center">
+        <div className="flex max-sm:flex-col font-bold max-sm:text-lg text-xl items-center justify-start gap-4 my-1">
           <h1>{sourceUsername}</h1>
-          <FaArrowRightLong size={16} color="skyblue" />
+          <FaArrowRightLong className="text-blue-500 max-sm:hidden" size={16} />
+          <FaArrowDownLong className="text-blue-500 sm:hidden" size={16} />
           <h1>{destinationUsername}</h1>
         </div>
         <p className="text-muted-foreground text-sm">
@@ -39,7 +40,10 @@ export const InvoiceCard = ({
       <hr className="my-3 block" />
 
       <div className="flex flex-col items-center my-5 space-y-1">
-        <p className="text-muted-foreground" title="Source AccountId">
+        <p
+          className="text-muted-foreground text-sm max-sm:text-xs break-words w-full text-center"
+          title="Source AccountId"
+        >
           {sourceAccountId}
         </p>
         <div className="flex flex-col items-center relative h-28 w-full">
@@ -52,7 +56,10 @@ export const InvoiceCard = ({
             <span className="absolute bottom-2 rounded-sm right-1/2 -translate-x-[7px] block w-1 h-7 bg-blue-500 -rotate-45" />
           </div>
         </div>
-        <p className="text-muted-foreground" title="destination AccountId">
+        <p
+          className="text-muted-foreground text-sm max-sm:text-xs break-words w-full text-center"
+          title="Destination AccountId"
+        >
           {destinationAccountId}
         </p>
       </div>
