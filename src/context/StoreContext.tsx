@@ -70,7 +70,6 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(true);
     try {
       const response = await axios.get("/api/invoices");
-      console.log(response.data.invoices);
       setInvoices(response.data.invoices);
     } catch (err) {
       toast("Error Fetching Accounts.");
