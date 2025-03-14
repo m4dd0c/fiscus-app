@@ -15,6 +15,8 @@ interface iStoreContext {
   transactions: any[];
   fetchTransactions: () => Promise<void>;
   transferFunds: (data: z.infer<typeof transferSchema>) => Promise<void>;
+  fetchInvoices: () => Promise<void>;
+  invoices: any[];
 }
 
 const StoreContext = createContext<iStoreContext | null>(null);
@@ -25,6 +27,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
 
   const [accounts, setAccounts] = useState<any[]>([]);
+  const [invoices, setInvoices] = useState<any[]>([]);
   const [transactions, setTransactions] = useState<any[]>([]);
 
   const fetchTransactions = useCallback(async () => {
@@ -63,6 +66,19 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  const fetchInvoices = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get("/api/invoices");
+      console.log(response.data.invoices);
+      setInvoices(response.data.invoices);
+    } catch (err) {
+      toast("Error Fetching Accounts.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   return (
     <StoreContext
       value={{
@@ -72,6 +88,8 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         fetchAccounts,
         transactions,
         transferFunds,
+        invoices,
+        fetchInvoices,
         fetchTransactions,
       }}
     >
