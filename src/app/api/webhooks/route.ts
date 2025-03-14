@@ -126,8 +126,7 @@ export async function POST(req: Request) {
   } catch (e: any) {
     return NextResponse.json(
       {
-        error: "some error found",
-        stack: e?.message || e?.response?.data || e,
+        error: "Some error occured.",
       },
       { status: 400 },
     );

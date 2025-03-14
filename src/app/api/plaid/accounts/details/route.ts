@@ -22,7 +22,7 @@ export async function GET() {
     return NextResponse.json({ accounts, numbers, request_id });
   } catch (error) {
     return NextResponse.json(
-      { error: "Error generating link token", stack: error },
+      { error: "Error generating link token" },
       { status: 500 },
     );
   }

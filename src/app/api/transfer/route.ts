@@ -17,12 +17,6 @@ export async function POST(req: NextRequest) {
       where: { accountId: destinationAccountId },
     });
 
-    console.log(
-      "sourceUser",
-      !!sourceUser,
-      "destinationUser",
-      !!destinationUser,
-    );
     if (!sourceUser || !destinationUser) {
       return NextResponse.json(
         {
@@ -35,12 +29,6 @@ export async function POST(req: NextRequest) {
 
     const sourceFundingSourceUrl = sourceUser.fundingSourceUrl;
     const destinationFundingSourceUrl = destinationUser.fundingSourceUrl;
-    console.log(
-      "sourceFundingSourceUrl",
-      sourceFundingSourceUrl,
-      "destinationFundingSourceUrl",
-      destinationFundingSourceUrl,
-    );
     if (!sourceFundingSourceUrl || !destinationFundingSourceUrl) {
       return NextResponse.json(
         {
@@ -51,7 +39,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("3rd sending requbody");
     const requestBody = {
       _links: {
         source: { href: sourceFundingSourceUrl },
@@ -63,14 +50,12 @@ export async function POST(req: NextRequest) {
       },
     };
     const data = await dwollaClient.post("transfers", requestBody);
-    console.log("4rd dwolla reply", data.body, data.headers, data.status);
     const location = data.headers.get("location");
     if (!location)
       return NextResponse.json(
         { error: "Error transferring funds." },
         { status: 500 },
       );
-    console.log("5rd creating receipt");
     // creating receipt
     await prismaClient.receipt.create({
       data: {
@@ -82,12 +67,10 @@ export async function POST(req: NextRequest) {
         transferId: location,
       },
     });
-    console.log("6rd last receipt");
     return NextResponse.json({ location }, { status: 200 });
   } catch (error) {
-    console.log("0 last receipt", error?.stack);
     return NextResponse.json(
-      { error: "Error transferring funds.", stack: error },
+      { error: "Error transferring funds." },
       { status: 500 },
     );
   }
