@@ -68,13 +68,13 @@ const Page = () => {
   return loading ? (
     <Loader />
   ) : (
-    <div className="p-4 w-5/6 mx-auto mt-5 h-[91vh] overflow-y-auto space-y-10 pb-10">
-      <section>
-        <LilHeading
-          title="Financial Summary"
-          subTitle="See your Financial Report."
-        />
-        <div className="flex flex-wrap gap-3">
+    <div className="p-4 w-5/6 mx-auto mt-5 ">
+      <LilHeading
+        title="Financial Summary"
+        subTitle="See your Financial Report."
+      />
+      <article className="space-y-10">
+        <section className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-5">
           {summary.map((el) => (
             <SummaryCard
               key={el.title}
@@ -83,12 +83,10 @@ const Page = () => {
               icon={el.icon}
             />
           ))}
-        </div>
-      </section>
-      <section className="flex justify-center gap-4 border p-4 rounded-xl">
-        <div className="w-full h-full">
-          <LilHeading title="Accounts" subTitle="See your Linked Accounts." />
-          <div className="border rounded-xl overflow-y-auto h-[40vh]">
+        </section>
+        <section className="flex flex-wrap justify-center gap-4 border p-4 rounded-xl">
+          <div className="w-full h-full">
+            <LilHeading title="Accounts" subTitle="See your Linked Accounts." />
             {accounts.length === 0 ? (
               <div className="grid place-items-center h-full w-full">
                 No Bank Account Added Yet!
@@ -99,55 +97,55 @@ const Page = () => {
               ))
             )}
           </div>
-        </div>
-        <div className="w-full">
-          <LilHeading
-            title="Transactions"
-            subTitle="See your Recent Transactions."
-          />
-          <div className="border rounded-xl overflow-y-auto h-[40vh]">
-            {accounts.length === 0 ? (
-              <div className="grid place-items-center h-full w-full">
-                No Bank Account Added Yet!
-              </div>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow className="">
-                    <TableHead className="w-1/4">Date</TableHead>
-                    <TableHead className="w-1/2">Description</TableHead>
-                    <TableHead className="w-1/4 text-right">Amount</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {transactions.map((tx: any) => (
-                    <TableRow key={tx.transaction_id} className="">
-                      <TableCell>{tx.date}</TableCell>
-                      <TableCell>{tx.name}</TableCell>
-                      <TableCell
-                        className={`text-right ${tx.amount < 0 ? "text-red-500" : "text-green-500"}`}
-                      >
-                        ${tx.amount.toFixed(2)}
-                      </TableCell>
+          <div className="w-full">
+            <LilHeading
+              title="Transactions"
+              subTitle="See your Recent Transactions."
+            />
+            <div className="border rounded-xl overflow-y-auto h-[40vh]">
+              {accounts.length === 0 ? (
+                <div className="grid place-items-center h-full w-full">
+                  No Bank Account Added Yet!
+                </div>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow className="">
+                      <TableHead className="w-1/4">Date</TableHead>
+                      <TableHead className="w-1/2">Description</TableHead>
+                      <TableHead className="w-1/4 text-right">Amount</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
+                  </TableHeader>
+                  <TableBody>
+                    {transactions.map((tx: any) => (
+                      <TableRow key={tx.transaction_id} className="">
+                        <TableCell>{tx.date}</TableCell>
+                        <TableCell>{tx.name}</TableCell>
+                        <TableCell
+                          className={`text-right ${tx.amount < 0 ? "text-red-500" : "text-green-500"}`}
+                        >
+                          ${tx.amount.toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </div>
           </div>
-        </div>
-      </section>
-      <section>
-        <LilHeading
-          title="Alerts & Reminders"
-          subTitle="Take a look at Alerts & Reminders."
-        />
-        <div className="space-y-2">
-          {alertsData.map((el) => (
-            <AlertCard key={el.title} data={el} />
-          ))}
-        </div>
-      </section>
+        </section>
+        <section>
+          <LilHeading
+            title="Alerts & Reminders"
+            subTitle="Take a look at Alerts & Reminders."
+          />
+          <div className="space-y-2">
+            {alertsData.map((el) => (
+              <AlertCard key={el.title} data={el} />
+            ))}
+          </div>
+        </section>
+      </article>
     </div>
   );
 };

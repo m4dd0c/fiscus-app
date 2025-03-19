@@ -64,11 +64,9 @@ function Page() {
   return accountLoading ? (
     <Loader />
   ) : accounts.length === 0 ? (
-    <div className="h-[91vh] grid place-items-center">
-      No Bank Account Added Yet.
-    </div>
+    <div className="grid place-items-center">No Bank Account Added Yet.</div>
   ) : (
-    <div className="w-full h-[91vh] grid place-items-center">
+    <div className="w-full grid place-items-center pt-24">
       <div className="w-5/6 mx-auto border rounded-xl p-4">
         <LilHeading
           title="Transfer funds"

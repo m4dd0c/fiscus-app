@@ -33,11 +33,11 @@ const Transactions = () => {
       {loading ? (
         <Loader />
       ) : accounts.length === 0 ? (
-        <div className="h-[91vh] grid place-items-center">
+        <div className="grid place-items-center">
           No Bank Account Added Yet.
         </div>
       ) : (
-        <div className="border rounded-xl overflow-y-scroll h-[80vh] shadow-md">
+        <div className="border rounded-xl shadow-md">
           <Table>
             <TableHeader>
               <TableRow className="">

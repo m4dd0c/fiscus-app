@@ -11,7 +11,7 @@ export const SummaryCard = ({
   icon: React.JSX.Element;
 }) => {
   return (
-    <div className="h-24 w-[340px] border rounded-lg space-y-2 p-4">
+    <div className="h-24 border rounded-lg space-y-2 p-4">
       <div className="flex justify-between uppercase opacity-70 items-center text-sm font-semibold">
         <h1>{title}</h1>
         {icon}

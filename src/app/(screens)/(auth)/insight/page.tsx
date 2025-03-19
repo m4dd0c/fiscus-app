@@ -22,11 +22,9 @@ export default function Dashboard() {
   return loading ? (
     <Loader />
   ) : accounts.length === 0 ? (
-    <div className="place-items-center grid h-[91vh]">
-      No Bank Account Added Yet.
-    </div>
+    <div className="place-items-center grid">No Bank Account Added Yet.</div>
   ) : (
-    <div className="h-[91vh] overflow-y-auto w-11/12 py-5 mx-auto">
+    <div className="w-11/12 py-5 mx-auto">
       <LilHeading title="Insight" subTitle="Get overview of your Accounts" />
       <div className="flex flex-wrap justify-evenly gap-2 my-2">
         <PieChart transactions={transactions} />

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -66,6 +66,11 @@ const links = [
 export function MainSidebar({ children }: { children: React.ReactNode }) {
   const { user, isLoaded } = useUser();
   const [open, setOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  if (!isMounted) return null;
   if (!user) return null;
   return !isLoaded ? (
     <Loader />

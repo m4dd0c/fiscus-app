@@ -12,7 +12,7 @@ const Page = () => {
     })();
   }, [fetchInvoices]);
   return (
-    <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3 p-10 container mx-auto overflow-y-auto h-screen pb-24">
+    <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3 p-10 container mx-auto">
       {invoices &&
         invoices?.length > 0 &&
         invoices.map((invoice) => (

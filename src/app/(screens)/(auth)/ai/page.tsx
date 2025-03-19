@@ -56,9 +56,7 @@ const Page = () => {
   return accountLoading ? (
     <Loader />
   ) : accounts.length === 0 ? (
-    <div className="h-[91vh] grid place-items-center">
-      No Bank Account Added Yet.
-    </div>
+    <div className="grid place-items-center">No Bank Account Added Yet.</div>
   ) : (
     <div className="flex flex-col h-[91vh] p-4">
       {/* Chat Messages Area */}
